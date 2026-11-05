@@ -1,0 +1,12 @@
+rules_version = '2';
+
+// Mindora reads and writes Firestore ONLY through the backend (Firebase Admin SDK),
+// which bypasses these rules and enforces per-user access itself.
+// Browsers therefore get no direct access at all (defence in depth).
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

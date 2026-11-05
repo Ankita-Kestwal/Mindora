@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-font="inter">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Mindora — AI-powered personalised learning and academic assistance." />
+    <title>Mindora</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Applies the saved theme and font before first paint (no flash). Logic mirrors src/lib/theme.js -->
+    <script>
+      (function () {
+        try {
+          var p = JSON.parse(localStorage.getItem('mindora.prefs') || '{}');
+          var t = p.theme === 'light' ? 'light' : 'dark';
+          if (p.autoTheme && p.lastSwitchAt && p.autoIntervalMin > 0) {
+            var n = Math.floor((Date.now() - p.lastSwitchAt) / (p.autoIntervalMin * 60000));
+            if (n > 0 && n % 2 === 1) t = t === 'dark' ? 'light' : 'dark';
+          }
+          document.documentElement.setAttribute('data-theme', t);
+          if (p.font) document.documentElement.setAttribute('data-font', p.font);
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&family=Sora:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600;700&display=swap" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

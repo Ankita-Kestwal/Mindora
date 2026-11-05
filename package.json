@@ -1,0 +1,24 @@
+{
+  "name": "mindora",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Mindora \u2013 AI-powered personalised learning and academic assistance platform",
+  "scripts": {
+    "dev": "node scripts/preflight.mjs && concurrently -k -n auth,api,web -c yellow,cyan,magenta \"npm:emulators\" \"npm:api:local\" \"npm:web:local\"",
+    "dev:real": "node scripts/preflight.mjs && concurrently -k -n api,web -c cyan,magenta \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "emulators": "firebase emulators:start --only auth --project demo-mindora",
+    "api:local": "cross-env CHALLENGE_ANY_DAY=true DATA_STORE=memory FIREBASE_PROJECT_ID=demo-mindora FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099 npm --prefix server run dev",
+    "web:local": "npm --prefix client run dev -- --mode emulator --open",
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "test:server": "firebase emulators:exec --only auth --project demo-mindora \"npm --prefix server test\"",
+    "build": "npm --prefix client run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.5",
+    "cross-env": "^7.0.3",
+    "firebase-tools": "^15.35.0"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
+}
